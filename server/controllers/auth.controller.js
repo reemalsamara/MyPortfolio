@@ -2,11 +2,13 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { expressjwt } from "express-jwt";
 import config from "./../../config/config.js";
+import bcrypt from "bcryptjs";
+
 const signin = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(401).json({ error: "User not found" });
-    if (!user.authenticate(req.body.password)) {
+    if (!bcrypt.compareSync(req.body.password, user.hashed_password)) {
       return res.status(401).send({ error: "Email and password don't match." });
     }
     const token = jwt.sign({ _id: user._id }, config.jwtSecret);
@@ -17,6 +19,7 @@ const signin = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (err) {

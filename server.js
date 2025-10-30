@@ -41,7 +41,7 @@ app.use("/api/contacts", contactRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/qualifications", qualificationRoutes);
 app.use("/api/users", userRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 // Start the server
 const PORT = config.port || 4000;
