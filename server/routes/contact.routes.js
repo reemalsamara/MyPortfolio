@@ -1,4 +1,5 @@
 import express from "express";
+import authCtrl from "../controllers/auth.controller.js";
 import {
     createContact,
     getContacts,
@@ -7,41 +8,17 @@ import {
     deleteContact,
     deleteAllContacts,
 } from "../controllers/contact.controller.js";
-import authCtrl from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
-//  Public routes – anyone can view
-router.get("/", getContacts);
-router.get("/:id", getContactById);
+// 🌍 Public: anyone can submit the form
+router.post("/", createContact);
 
-// Protected routes – only admin can create/update/delete
-router.post("/", authCtrl.requireSignin, (req, res, next) => {
-    if (req.auth.role !== "admin") {
-        return res.status(403).json({ error: "Admins only can create contacts" });
-    }
-    next();
-}, createContact);
-
-router.put("/:id", authCtrl.requireSignin, (req, res, next) => {
-    if (req.auth.role !== "admin") {
-        return res.status(403).json({ error: "Admins only can update contacts" });
-    }
-    next();
-}, updateContact);
-
-router.delete("/:id", authCtrl.requireSignin, (req, res, next) => {
-    if (req.auth.role !== "admin") {
-        return res.status(403).json({ error: "Admins only can delete contacts" });
-    }
-    next();
-}, deleteContact);
-
-router.delete("/", authCtrl.requireSignin, (req, res, next) => {
-    if (req.auth.role !== "admin") {
-        return res.status(403).json({ error: "Admins only can delete all contacts" });
-    }
-    next();
-}, deleteAllContacts);
+// 🔒 Admin-only routes (require JWT)
+router.get("/", authCtrl.requireSignin, getContacts);
+router.get("/:id", authCtrl.requireSignin, getContactById);
+router.put("/:id", authCtrl.requireSignin, updateContact);
+router.delete("/:id", authCtrl.requireSignin, deleteContact);
+router.delete("/", authCtrl.requireSignin, deleteAllContacts);
 
 export default router;

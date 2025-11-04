@@ -1,19 +1,16 @@
 import Contact from "../models/contact.model.js";
 
-//  CREATE — Admin only
 export const createContact = async (req, res) => {
     try {
-        // Optional role check (if handled here instead of route)
-        if (req.auth && req.auth.role !== "admin") {
-            return res.status(403).json({ error: "Only admin can create contacts" });
-        }
-
+        console.log("📩 Incoming contact data:", req.body); // For debugging
         const contact = await Contact.create(req.body);
         res.status(201).json(contact);
     } catch (err) {
+        console.error("❌ Error creating contact:", err.message);
         res.status(400).json({ error: err.message });
     }
 };
+
 
 //  READ ALL — Public
 export const getContacts = async (req, res) => {

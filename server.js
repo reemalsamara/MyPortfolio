@@ -15,36 +15,40 @@ import authRoutes from "./server/routes/auth.routes.js";
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// MongoDB Connection
-mongoose
-  .connect(config.mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+// ✅ Middleware — FIXED: Allow your frontend (Vite port 5173)
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
-  .then(() => console.log(" Connected to the MongoDB database!"))
+);
+
+app.use(express.json()); // Needed for JSON body parsing
+
+// ✅ MongoDB Connection
+mongoose
+  .connect(config.mongoUri)
+  .then(() => console.log("✅ Connected to the MongoDB database!"))
   .catch((err) => {
-    console.error(" Unable to connect to MongoDB:", err.message || err);
+    console.error("❌ Unable to connect to MongoDB:", err.message || err);
     process.exit(1);
   });
 
-// Root route (browser view)
+// ✅ Root route (browser view)
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my portfolio application." });
 });
 
-// API Routes
+// ✅ API Routes
 app.use("/api/contacts", contactRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/qualifications", qualificationRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
-// Start the server
-const PORT = config.port || 4000;
+// ✅ Start the server
+const PORT = config.port || 3000;
 app.listen(PORT, () => {
-  console.info(` Server started on http://localhost:${PORT}`);
+  console.info(`🚀 Server started on http://localhost:${PORT}`);
 });
