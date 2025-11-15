@@ -11,12 +11,14 @@ import {
 
 const router = express.Router();
 
-// 🌍 Public: anyone can submit the form
+// Public: anyone can submit the contact form
 router.post("/", createContact);
 
-// 🔒 Admin-only routes (require JWT)
+// Signed-in: can read
 router.get("/", authCtrl.requireSignin, getContacts);
 router.get("/:id", authCtrl.requireSignin, getContactById);
+
+// Admin-only : can update and delete
 router.put("/:id", authCtrl.requireSignin, updateContact);
 router.delete("/:id", authCtrl.requireSignin, deleteContact);
 router.delete("/", authCtrl.requireSignin, deleteAllContacts);

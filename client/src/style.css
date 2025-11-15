@@ -1,4 +1,4 @@
-/* ===== Global Styles ===== */
+/* ===== Global Reset ===== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f9f9fb;
     color: #333;
     line-height: 1.6;
@@ -18,7 +18,7 @@ body {
     width: 100%;
 }
 
-/* ===== Navbar - CENTERED ===== */
+/* ===== Navbar ===== */
 .navbar {
     display: flex;
     align-items: center;
@@ -34,34 +34,58 @@ body {
     height: 80px;
 }
 
-.navbar .logo img {
-    height: 50px;
-}
-
-.nav-links {
-    list-style: none;
+/* Left side: main links */
+.nav-left {
     display: flex;
-    gap: 25px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    align-items: center;
+    gap: 20px;
 }
 
-.nav-links li a {
-    color: white;
-    text-decoration: none;
+/* Right side: auth area */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Navbar links */
+.navbar a {
+    color: #ffffff;
     font-weight: 500;
-    transition: color 0.3s ease;
-    padding: 8px 16px;
+    padding: 8px 14px;
     border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.nav-links li a:hover {
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
     color: #ffdd57;
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ===== Page Layout - PROPERLY CENTERED ===== */
+/* Navbar user text */
+.nav-user {
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Navbar sign out button */
+.navbar button {
+    background-color: #ffffff;
+    color: #004aad;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar button:hover {
+    background-color: #ffdd57;
+    color: #002f6c;
+}
+
+/* ===== Page Layout ===== */
 .page {
     display: flex;
     flex-direction: column;
@@ -369,7 +393,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* ===== Buttons ===== */
+/* ===== Generic Button ===== */
 .btn {
     display: inline-block;
     margin-top: 20px;
@@ -408,7 +432,7 @@ body {
     width: 100%;
 }
 
-/* ===== Responsive Design ===== */
+/* ===== Responsive ===== */
 @media (max-width: 1024px) {
     .contact-wrapper {
         flex-direction: column;
@@ -420,10 +444,6 @@ body {
     .contact-form {
         max-width: 500px;
         width: 100%;
-    }
-
-    .nav-links {
-        gap: 15px;
     }
 }
 
@@ -439,12 +459,10 @@ body {
         gap: 15px;
     }
 
-    .nav-links {
-        position: static;
-        transform: none;
+    .nav-left,
+    .nav-right {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
     }
 
     .page {
@@ -481,17 +499,6 @@ body {
 @media (max-width: 480px) {
     .navbar {
         padding: 10px 15px;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-    }
-
-    .nav-links li a {
-        display: block;
-        padding: 10px;
     }
 
     .page {

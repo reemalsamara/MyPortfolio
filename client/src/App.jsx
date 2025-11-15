@@ -6,9 +6,12 @@ import Services from "./components/Services";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import NavBar from "./components/NavBar"
-import './style.css'; // Your custom CSS
+import './style.css';
+import Signin from "./components/Signin";
+import Signup from "./components/Signup";
+import AdminContacts from "./components/AdminContacts";
 
-// Remove this if it exists: import './App.css'
+
 
 function App() {
   return (
@@ -21,6 +24,10 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/admin/contacts" element={<AdminContacts />} />
+
       </Routes>
     </Router>
   );

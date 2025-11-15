@@ -1,18 +1,18 @@
 import Contact from "../models/contact.model.js";
 
+// CREATE — Public (contact form)
 export const createContact = async (req, res) => {
     try {
-        console.log("📩 Incoming contact data:", req.body); // For debugging
+        console.log(" Incoming contact data:", req.body);
         const contact = await Contact.create(req.body);
         res.status(201).json(contact);
     } catch (err) {
-        console.error("❌ Error creating contact:", err.message);
+        console.error(" Error creating contact:", err.message);
         res.status(400).json({ error: err.message });
     }
 };
 
-
-//  READ ALL — Public
+// READ ALL — Signed-in user or admin
 export const getContacts = async (req, res) => {
     try {
         const contacts = await Contact.find();
@@ -22,7 +22,7 @@ export const getContacts = async (req, res) => {
     }
 };
 
-//  READ ONE — Public
+// READ ONE — Signed-in user or admin
 export const getContactById = async (req, res) => {
     try {
         const contact = await Contact.findById(req.params.id);
@@ -33,14 +33,18 @@ export const getContactById = async (req, res) => {
     }
 };
 
-//  UPDATE — Admin only
+// UPDATE — Admin only
 export const updateContact = async (req, res) => {
     try {
-        if (req.auth && req.auth.role !== "admin") {
+        if (!req.auth || req.auth.role !== "admin") {
             return res.status(403).json({ error: "Only admin can update contacts" });
         }
 
-        const updated = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updated = await Contact.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
         if (!updated) return res.status(404).json({ error: "Contact not found" });
         res.json(updated);
     } catch (err) {
@@ -48,10 +52,10 @@ export const updateContact = async (req, res) => {
     }
 };
 
-//  DELETE ONE — Admin only
+// DELETE ONE — Admin only
 export const deleteContact = async (req, res) => {
     try {
-        if (req.auth && req.auth.role !== "admin") {
+        if (!req.auth || req.auth.role !== "admin") {
             return res.status(403).json({ error: "Only admin can delete contacts" });
         }
 
@@ -63,10 +67,10 @@ export const deleteContact = async (req, res) => {
     }
 };
 
-//  DELETE ALL — Admin only
+// DELETE ALL — Admin only
 export const deleteAllContacts = async (req, res) => {
     try {
-        if (req.auth && req.auth.role !== "admin") {
+        if (!req.auth || req.auth.role !== "admin") {
             return res.status(403).json({ error: "Only admin can delete all contacts" });
         }
 

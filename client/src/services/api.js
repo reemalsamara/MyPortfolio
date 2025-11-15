@@ -13,7 +13,7 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// 🧩 Define backend endpoint functions
+//  Define backend endpoint functions
 export const sendContact = (data) => api.post("/contacts", data);
 
 export const getContacts = () => api.get("/contacts");
