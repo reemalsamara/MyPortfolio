@@ -18,7 +18,7 @@ const app = express();
 //  Middleware — FIXED: Allow frontend access
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"], // frontend
+    origin: ["http://localhost:5173", "http://localhost:3000", "https://myportfolio-frontend-56oe.onrender.com"], // frontend
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -48,7 +48,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
 //  Start the server
-const PORT = config.port || 5000;
+const PORT = process.env.port || 5000;
 app.listen(PORT, () => {
   console.info(` Server started on http://localhost:${PORT}`);
 });
