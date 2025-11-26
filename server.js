@@ -48,7 +48,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
 //  Start the server
-const PORT = config.port || 3000;
+const PORT = config.port || 5000;
 app.listen(PORT, () => {
   console.info(` Server started on http://localhost:${PORT}`);
 });

@@ -18,7 +18,6 @@ function Signin() {
         try {
             const user = await signin(form);
             alert(`Welcome ${user.name || user.email}`);
-            // If admin, you can navigate to an admin page
             navigate("/");
         } catch (err) {
             console.error(err);
@@ -28,27 +27,44 @@ function Signin() {
 
     return (
         <div className="page auth">
-            <h2>Sign In</h2>
-            <form onSubmit={handleSubmit} className="auth-form">
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={form.password}
-                    onChange={handleChange}
-                    required
-                />
-                {error && <p className="error-text">{error}</p>}
-                <button type="submit">Sign In</button>
-            </form>
+            <div className="auth-card">
+                <h2>Sign In</h2>
+                <p className="auth-subtitle">Welcome back! Please enter your details.</p>
+
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="auth-field">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            value={form.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="auth-field">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            value={form.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    {error && <p className="error-text">{error}</p>}
+
+                    <button type="submit" className="auth-button">
+                        Sign In
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

@@ -23,11 +23,9 @@ function Signup() {
             await api.post("/users", form);
             alert("Account created! Please sign in.");
             navigate("/signin");
-        }
-        catch (err) {
+        } catch (err) {
             console.error("Signup error:", err);
 
-            // Try to read error message from backend
             if (err.response && err.response.data) {
                 const msg =
                     err.response.data.error ||
@@ -38,40 +36,62 @@ function Signup() {
                 setError("Could not sign up. Please try again.");
             }
         }
-
     };
 
     return (
         <div className="page auth">
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSubmit} className="auth-form">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={form.password}
-                    onChange={handleChange}
-                    required
-                />
-                {error && <p className="error-text">{error}</p>}
-                <button type="submit">Sign Up</button>
-            </form>
+            <div className="auth-card">
+                <h2>Create Account</h2>
+                <p className="auth-subtitle">Join us — it only takes a moment.</p>
+
+                <form onSubmit={handleSubmit} className="auth-form">
+
+                    <div className="auth-field">
+                        <label htmlFor="name">Full Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="Enter your full name"
+                            value={form.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="auth-field">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            value={form.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="auth-field">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Create a strong password"
+                            value={form.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    {error && <p className="error-text">{error}</p>}
+
+                    <button type="submit" className="auth-button">
+                        Sign Up
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
